@@ -2,10 +2,20 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
 const secretOrKey = require('../../config/keys').secretOrKey;
 const User = require('../../models/User');
 const validateUserAuth = require('../../validation/authValidation');
+
+//Get current User
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  ({ user: { id, username } }, res) => {
+    res.json({ id, username });
+  }
+);
 
 //Register User
 router.post('/register', async (req, res) => {
