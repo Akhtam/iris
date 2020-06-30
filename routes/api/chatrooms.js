@@ -20,9 +20,9 @@ router.post(
   '/',
   //   passport.authenticate('jwt', { session: false }), add later
   async (req, res) => {
-    const { name, description, photoUrl = '' } = req.body;
+    const { name, description, photoUrl = '', _admin } = req.body;
     try {
-      const newChatroom = await new Chatroom({ name, description, photoUrl });
+      const newChatroom = await new Chatroom({ name, description, photoUrl, _admin });
       await newChatroom.save();
       res.json(newChatroom);
     } catch (err) {
