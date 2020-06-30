@@ -18,6 +18,18 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
+  createdChatrooms: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Chatroom',
+    },
+  ],
+  chatrooms: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Chatroom',
+    },
+  ],
 });
 
 module.exports = User = mongoose.model('User', userSchema);
