@@ -6,6 +6,8 @@ const passport = require('passport');
 const Chatroom = require('../../models/Chatroom');
 const validateChatroom = require('../../validation/chatroomValidation');
 
+const User = require('../../models/User');
+
 router.get('/', async (req, res) => {
   try {
     const chatrooms = await Chatroom.find();
@@ -22,8 +24,13 @@ router.post(
   async (req, res) => {
     const { name, description, photoUrl = '', _admin } = req.body;
     try {
-      const newChatroom = await new Chatroom({ name, description, photoUrl, _admin });
+      const newChatroom = new Chatroom({ name, description, photoUrl, _admin });
       await newChatroom.save();
+      await User.findOneAndUpdate(_admin, {
+        $push: {
+          createdChatrooms: newChatroom._id,
+        },
+      });
       res.json(newChatroom);
     } catch (err) {
       res.json(err);

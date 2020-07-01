@@ -9,7 +9,11 @@ const users = require('./routes/api/users');
 const chatrooms = require('./routes/api/chatrooms');
 
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
   .then(() => console.log('Connected to MongoDB successfully'))
   .catch(err => console.log(err));
 
